@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cabecalho from "../../componentes/Cabecalho";
 import Rodape from "../../componentes/Rodape";
 import { UF } from "../../constantes/ufs";
+import { obterEndereco } from "../../servicos/api";
 
 function Cadastro() {
     const [nome, setNome] = useState("");
@@ -17,6 +18,14 @@ function Cadastro() {
     const [cidade, setCidade] = useState("");
     const [uf, setUf] = useState("");
     const [complemento, setComplemento] = useState("");
+
+    useEffect(() => {
+        console.log("Tamanho do CEP: " + cep.length);
+        if (cep.length === 9) {
+            console.log("Chamando a API do Via CEP...");
+            obterEndereco(cep, setLogradouro, setBairro, setCidade, setUf);
+        }
+    }, [cep]);
 
     return (
         <>
