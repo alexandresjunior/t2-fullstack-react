@@ -3,6 +3,7 @@ import Cabecalho from "../../componentes/Cabecalho";
 import Rodape from "../../componentes/Rodape";
 import { UF } from "../../constantes/ufs";
 import { obterEndereco } from "../../servicos/api";
+import Modal from "../../componentes/Modal";
 
 function Cadastro() {
     const [nome, setNome] = useState("");
@@ -18,6 +19,7 @@ function Cadastro() {
     const [cidade, setCidade] = useState("");
     const [uf, setUf] = useState("");
     const [complemento, setComplemento] = useState("");
+    const [exibirModal, setExibirModal] = useState(false);
 
     useEffect(() => {
         console.log("Tamanho do CEP: " + cep.length);
@@ -27,12 +29,28 @@ function Cadastro() {
         }
     }, [cep]);
 
+    const cadastrarAluno = (e) => {
+        e.preventDefault();
+
+        setExibirModal(true);
+    }
+
     return (
         <>
             <Cabecalho />
+
+            { exibirModal && (
+                <Modal 
+                    titulo={"Confirmacao de Cadastro"}
+                    texto={"Aluno cadastrado com sucesso!"}
+                    txtBtn1="OK"
+                    onClickBtn1={() => setExibirModal(false)}
+                />
+            )}
+
             <section className='container mt-3' id="formulario">
                 <h1 className='text-dark'>Cadastro de Aluno</h1>
-                <form className="row g-3">
+                <form className="row g-3" onSubmit={cadastrarAluno}>
                     <div className="col-md-4 col-12">
                         <label htmlFor="nome" className="form-label">Nome</label>
                         <input
