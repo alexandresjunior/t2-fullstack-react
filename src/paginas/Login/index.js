@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import logo from "../../assets/treina_recife_logo.png";
 import { useNavigate } from "react-router-dom";
+import { ContextoGlobal } from "../../contextos/ContextoGlobal";
 
 function Login() {
     const navigate = useNavigate();
+
+    const { login } = useContext(ContextoGlobal);
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
@@ -16,11 +19,7 @@ function Login() {
 
         // Chamada a API de autenticacao
 
-        if (manterConectado) {
-            localStorage.setItem("usuarioLogado", JSON.stringify(dadosUsuario));
-        }
-
-        sessionStorage.setItem("usuarioLogado", JSON.stringify(dadosUsuario));
+        login(dadosUsuario);
 
         navigate("/cadastro");
     }

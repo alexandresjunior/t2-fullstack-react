@@ -1,9 +1,12 @@
 import './App.css';
+import { GlobalProvider } from './contextos/ContextoGlobal';
 import Rotas from './rotas';
 
 function App() {
   return (
-    <Rotas />
+    <GlobalProvider>
+      <Rotas />
+    </GlobalProvider>
   );
 }
 
